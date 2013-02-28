@@ -129,11 +129,14 @@
     miniVideo = document.getElementById("miniVideo");
     remoteVideo = document.getElementById("remoteVideo");
     resetStatus();
-//    openChannel('{{ token }}');
+    openChannel('{{ token }}');
     doGetUserMedia();
   }
 
   function openChannel(channelToken) {
+    channelReady = true;
+    return;
+/*
     console.log("Opening channel.");
     var channel = new goog.appengine.Channel(channelToken);
     var handler = {
@@ -143,6 +146,7 @@
       'onclose': onChannelClosed
     };
     socket = channel.open(handler);
+*/
   }
 
   function resetStatus() {
@@ -249,7 +253,7 @@
   function sendMessage(message) {
     var msgString = JSON.stringify(message);
     console.log('C->S: ' + msgString);
-    path = '/message?r={{ room_key }}' + '&u={{ me }}';
+    path = 'http://172.21.97.165:8000/apprtc/message?r={{ room_key }}' + '&u={{ me }}';
     var xhr = new XMLHttpRequest();
     xhr.open('POST', path, true);
     xhr.send(msgString);
