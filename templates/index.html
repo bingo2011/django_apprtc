@@ -4,6 +4,7 @@
 <title>WebRTC Reference App</title>
 <link rel="canonical" href="{{ room_link }}"/>
 <meta http-equiv="X-UA-Compatible" content="chrome=1"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
 <!-- Load the polyfill to switch-hit between Chrome and Firefox -->
 <script src="{{ STATIC_URL }}js/adapter.js"></script>
@@ -250,12 +251,30 @@
     sendMessage(sessionDescription);
   }
 
+  // using jQuery
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+  }
+
   function sendMessage(message) {
     var msgString = JSON.stringify(message);
     console.log('C->S: ' + msgString);
-    path = 'http://172.21.97.165:8000/apprtc/message?r={{ room_key }}' + '&u={{ me }}';
+    path = '/apprtc/message/?r={{ room_key }}' + '&u={{ me }}';
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', path, true);
+    xhr.open('POST', '/apprtc/message/r=1111', true);
+    xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
     xhr.send(msgString);
   }
 

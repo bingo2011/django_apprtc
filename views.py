@@ -1,8 +1,11 @@
 # Create your views here.
 from django.shortcuts import render_to_response
+from django.http import HttpResponse
 from django.template import RequestContext
+from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from apprtc import *
 
+@ensure_csrf_cookie
 def mainpage(request):
     room_key = '1111'
     initiator = 1
@@ -30,7 +33,7 @@ def mainpage(request):
 
     return render_to_response('index.html', template_values, context_instance=RequestContext(request))
 
-def handle_message(request):
-    import pdb; pdb.set_trace()
-
-    print request.POST
+def handle_message(request, room):
+    print room
+    print request.path
+    return HttpResponse("Hello world")
