@@ -36,4 +36,6 @@ def mainpage(request):
 def handle_message(request):
     print 'room=' + request.GET.get('r','')
     print 'user=' + request.GET.get('u','')
+    message_obj = json.loads(request.body)
+    print message_obj['type']
     return HttpResponse("Hello world")

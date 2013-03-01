@@ -273,7 +273,11 @@
     console.log('C->S: ' + msgString);
     path = '/apprtc/message/?r={{ room_key }}' + '&u={{ me }}';
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', path, false);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200)
+           processSignalingMessage(xhr.responseText);
+    }
+    xhr.open('POST', path, true);
     xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
     xhr.send(msgString);
   }
