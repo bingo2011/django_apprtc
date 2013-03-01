@@ -33,7 +33,7 @@ def mainpage(request):
 
     return render_to_response('index.html', template_values, context_instance=RequestContext(request))
 
-def handle_message(request, room):
-    print room
-    print request.path
+def handle_message(request):
+    print 'room=' + request.GET.get('r','')
+    print 'user=' + request.GET.get('u','')
     return HttpResponse("Hello world")
