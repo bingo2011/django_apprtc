@@ -283,6 +283,8 @@
   }
 
   function processSignalingMessage(message) {
+    console.log('S->C: ' + message);
+    return;
     var msg = JSON.parse(message);
 
     if (msg.type === 'offer') {

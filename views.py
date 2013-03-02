@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
-from apprtc import *
+from apprtc.utils import *
 
 @ensure_csrf_cookie
 def mainpage(request):
